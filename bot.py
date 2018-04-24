@@ -16,8 +16,9 @@ dn = datetime.date.today().isoweekday()
 def main():
     while True:
         print('1')
+        dn = datetime.date.today().isoweekday()
         today = datetime.datetime.now()
-        if today.hour==23 and today.minute>51:
+        if dn==7 and today.hour==23 and today.minute>51:
             config.file += 1
             a = str(config.file) + '.xlsx'
             timetable.start(a)
