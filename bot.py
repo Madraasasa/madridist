@@ -16,7 +16,6 @@ dn = datetime.date.today().isoweekday()
 def main():
     while True:
         print('1')
-        dn = datetime.date.today().isoweekday()
         today = datetime.datetime.now()
         if dn==7 and today.hour==23 and today.minute>51:
             config.file += 1
@@ -25,10 +24,10 @@ def main():
             config.week+=1
             a = str(config.week) + '.xlsx'
             timetable1.start(a)
-        if today.hour==2:
+        if today.hour==2 and today.minute<30:
 
             db.rassilka()
-            time.sleep(3600)
+            time.sleep(23*3600)
         else:
             time.sleep(600)
 
