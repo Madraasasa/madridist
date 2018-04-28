@@ -45,6 +45,7 @@ def rassilka():
     p = b.select('.rSide .description')
     pogoda = p[0].getText()
     c = pogoda.strip()
+    privet1="Доброе утро"
     for row in cur:
         print(row[1])
         print(row[2])
@@ -59,7 +60,7 @@ def rassilka():
             elif row[1] == "Лингвистика":
                 z = timetable1.get_day("ЛИНГВ", row[2], dn)
                 z = z + '\n' + x + '\n' + y + '\n' + c + '\n'
-            z=z+'\n'+privet
+            z=privet1+'\n'+z+'\n'+privet
             z = z.replace("*", "")
 
             bot.send_message(row[0], z)
@@ -76,5 +77,5 @@ def rassilka():
                 z = timetable.get_day("ХФММ", row[2], dn)
                 z = z + '\n' + x + '\n' + y + '\n' + c + '\n'
             z = z.replace("*", "")
-            z = z + '\n' + privet
+            z = privet1+'\n'+z + '\n' + privet
             bot.send_message(row[0], z)
