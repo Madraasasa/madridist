@@ -24,7 +24,7 @@ def main():
             config.week+=1
             a = str(config.week) + '.xlsx'
             timetable1.start(a)
-        if today.hour==12 and today.minute<30:
+        if today.hour==14 and today.minute<30:
 
             db.rassilka()
             time.sleep(23*3600)
