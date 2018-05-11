@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from openpyxl import load_workbook
 from telegraphapi import Telegraph
 import datetime
@@ -6,6 +7,7 @@ teleg1 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 pmii = {}
 geol = {}
 chem = {}
+par={}
 days=["ПОНЕДЕЛЬНИК","ВТОРНИК","СРЕДА","ЧЕТВЕРГ","ПЯТНИЦА","СУББОТА","ВОСКРЕСЕНЬЕ"]
 def start(a):
     file = a
@@ -13,7 +15,11 @@ def start(a):
 
     days = []
     para =1
-
+    par[1]='1️⃣'
+    par[2]='2️⃣'
+    par[3]='3️⃣'
+    par[4]='4️⃣'
+    par[5]='5️⃣'
     pmi, geo, chi = [], [], []
     dpmi, dgeo, dche = [], [], []
     k = 1
@@ -29,9 +35,10 @@ def start(a):
                 d=str(sheet.cell(row=i+8, column=j+1).value)
                 e=str(sheet.cell(row=i+16, column=j).value)
                 f=str(sheet.cell(row=i+16, column=j+1).value)
-                a=normalize(a,b,para)
-                c=normalize(c,d,para)
-                e=normalize(e,f,para)
+                m=par[para]
+                a=normalize(a,b,m)
+                c=normalize(c,d,m)
+                e=normalize(e,f,m)
                 para+=1
                 if a:
                     pmi.append(a)
@@ -71,11 +78,11 @@ def get_day(napr,kurs,d):
         a=pmii[kurs][d-1]
     if napr=="ГЕОЛ":
         a=geol[kurs][d-1]
-    if napr=="ХФММ":
+    if napr=="ХИМФ":
         a=chem[kurs][d-1]
     text=''
     if a=="ВЫХОДНОЙ":
-        return  napr + '  -  '+ days[d-1] +"\n"+ a+ '\n'
+        return  days[d-1] +"\n"+ a+ '\n'
     else:
         for i in range(0,len(a)):
             text= text +a[i]+ '\n'
@@ -84,11 +91,20 @@ def get_day(napr,kurs,d):
         text = text.replace('[семинар]', ' -СЕМИНАР- ')
         text = text.replace('[//ЭКЗАМЕН]', ' -ЭКЗАМЕН- ')
         text = text.replace('[//ЗАЧЕТ]', ' -ЗАЧЁТ- ')
+        text = text.replace('Фак:', '')
         text = text.replace('[//КОНСУЛЬТАЦИЯ]', ' -КОНСУЛЬТАЦИЯ- ')
-        text = text.replace('-ПЗ-  *Стадион "Спартак"*','Стадион "Спартак"')
-        text = text.replace('(','\n'+'*Преподаватель: "*')
-        text = text.replace(')','"')
-        text = text.replace("-ауд", " кабинет")
+        text = text.replace('-ПЗ-  *Стадион "Спартак"*','cтад. "Спартак"')
+        #p = text.rindex('(')
+        #p1 = text.rindex(')')
+        #m = text[p + 1:p1 - 1]
+        #print(m)
+        #if len(m) > 11:
+        #    k = text[:p1-1] + '\n    ' + text[p1:]
+        #    print(k)
+        #    text = k
+        text = text.replace('(','\n     ')
+        text = text.replace(')','')
+        text = text.replace("-ауд", " каб")
 
         return napr + '  -  '+days[d-1] +"\n"+text
 #get_day('ПМИИ',3)
@@ -133,7 +149,7 @@ def get_last_day(napr,kurs,dn):
     if teleg1[k]==0:
         a=''
         d = datetime.datetime.now()
-        if d.hour<17:
+        if d.hour<12:
             dnn=8
             ms=0
         else:
@@ -163,13 +179,13 @@ def get_last_day(napr,kurs,dn):
 def normalize(a,b,para):
     if a!='None' :
         if b=='None' and a[0]!='"':
-            return '*'+str(para) +'-я пара:  '+'*'+a
+            return str(para)+' '+a
         elif b=="стд":
-            return ('*'+str(para) +'-я пара:  '+'*'+a + ' *Стадион "Спартак"*')
+            return (str(para)+' '+a + ' *Стадион "Спартак"*')
         elif a[0]=='"':
             return a
         else:
-            return ('*'+str(para) +'-я пара:  '+'*'+a+ ' в '+ '*'+b+' кабинете *')
+            return (str(para)+' '+a+ ' в '+ '*'+b+' каб*')
     else:
         return 0
 

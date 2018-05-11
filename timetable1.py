@@ -7,6 +7,7 @@ moo = {}
 gmu = {}
 lin = {}
 reks={}
+par={}
 days=["ПОНЕДЕЛЬНИК","ВТОРНИК","СРЕДА","ЧЕТВЕРГ","ПЯТНИЦА","СУББОТА","ВОСКРЕСЕНЬЕ"]
 def start(a):
     file = a
@@ -14,7 +15,11 @@ def start(a):
 
     days = []
     para =1
-
+    par[1] = '1️⃣'
+    par[2] = '2️⃣'
+    par[3] = '3️⃣'
+    par[4] = '4️⃣'
+    par[5] = '5️⃣'
     mo,gm , ln,rek = [], [], [],[]
     dmo, dgm, dln, drek = [], [], [],[]
     k = 1
@@ -30,9 +35,10 @@ def start(a):
                 d=str(sheet.cell(row=i+8, column=j+1).value)
                 e=str(sheet.cell(row=i+16, column=j).value)
                 f=str(sheet.cell(row=i+16, column=j+1).value)
-                a=normalize(a,b,para)
-                c=normalize(c,d,para)
-                e=normalize(e,f,para)
+                m=par[para]
+                a=normalize(a,b,m)
+                c=normalize(c,d,m)
+                e=normalize(e,f,m)
                 para+=1
                 if a:
                     mo.append(a)
@@ -105,11 +111,20 @@ def get_day(napr,kurs,d):
         text = text.replace('[семинар]', ' -СЕМИНАР- ')
         text = text.replace('[//ЭКЗАМЕН]', ' -ЭКЗАМЕН- ')
         text = text.replace('[//ЗАЧЕТ]', ' -ЗАЧЁТ- ')
+        text = text.replace('Фак:', '')
         text = text.replace('[//КОНСУЛЬТАЦИЯ]', ' -КОНСУЛЬТАЦИЯ- ')
-        text = text.replace('-ПЗ-  *Стадион "Спартак"*','Стадион "Спартак"')
-        text = text.replace('(','\n'+'*Преподаватель: "*')
-        text = text.replace(')','"')
-        text = text.replace("-ауд", " кабинет")
+        text = text.replace('-ПЗ-  *Стадион "Спартак"*', 'cтад. "Спартак"')
+        # p = text.rindex('(')
+        # p1 = text.rindex(')')
+        # m = text[p + 1:p1 - 1]
+        # print(m)
+        # if len(m) > 11:
+        #    k = text[:p1-1] + '\n    ' + text[p1:]
+        #    print(k)
+        #    text = k
+        text = text.replace('(', '\n     ')
+        text = text.replace(')', '')
+        text = text.replace("-ауд", " каб")
 
         return napr + '  -  '+days[d-1] +"\n"+text
 #get_day('ПМИИ',3)
@@ -188,13 +203,14 @@ def get_last_day(napr,kurs,dn):
 def normalize(a,b,para):
     if a!='None' :
         if b=='None' and a[0]!='"':
-            return '*'+str(para) +'-я пара:  '+'*'+a
+            return str(para)+' '+a
         elif b=="стд":
-            return ('*'+str(para) +'-я пара:  '+'*'+a + ' *Стадион "Спартак"*')
+            return (str(para)+' '+a + ' *Стадион "Спартак"*')
         elif a[0]=='"':
             return a
         else:
-            return ('*'+str(para) +'-я пара:  '+'*'+a+ ' в '+ '*'+b+' кабинете *')
+            return (str(para)+' '+a+ ' в '+ '*'+b+' каб*')
     else:
         return 0
+
 
