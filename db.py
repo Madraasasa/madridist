@@ -29,8 +29,13 @@ def start(message,fuc,kurs):
 def rassilka():
     cur.execute("select * from users")
     dn = datetime.date.today().isoweekday()
+    m = datetime.date.today().month
+    if (len(str(m))) == 1:
+        m = '0' + str(m)
+    d = datetime.date.today().day + 1
+    print(d)
+    s = requests.get('https://sinoptik.com.ru/погода-душанбе/2018-' + m + '-' + str(d))
     privet='Удачной учебы @MGURASP_Bot'
-    s = requests.get('https://sinoptik.com.ru/погода-душанбе')
     b = bs4.BeautifulSoup(s.text, "html.parser")
     p3 = b.select('.temperature .p3')
     pogoda1 = p3[0].getText()
