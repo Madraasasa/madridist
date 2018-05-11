@@ -57,14 +57,24 @@ def rassilka():
         if row[1] in ("МО", "ГМУ","Лингвистика", "Реклама"):
             if row[1] == 'МО':
                 z = timetable1.get_day("МО", int(row[2]), dn)
+                k=z.rindex('\n',0, 30)
+                z=z[k+1:]
                 z = z + '\n' + x + '\n' + y + '\n' + c + '\n' + privet
             elif row[1] == 'ГМУ':
-
                 z = timetable1.get_day("ГМУ", row[2], dn)
+                k=z.rindex('\n',0, 30)
+                z=z[k+1:]
                 z = z + '\n' + x + '\n' + y + '\n' + c+'\n'
             elif row[1] == "Лингвистика":
                 z = timetable1.get_day("ЛИНГВ", row[2], dn)
+                k=z.rindex('\n',0, 30)
+                z=z[k+1:]
                 z = z + '\n' + x + '\n' + y + '\n' + c + '\n'
+            elif row[1] == "Реклама":
+                z = timetable1.get_day("РЕКС", row[2], dn)
+                k=z.rindex('\n',0, 30)
+                z=z[k+1:]
+                z = z + '\n' + x + '\n' + y + '\n' + c + '\n'  
             z=privet1+'\n'+z+'\n'+privet
             z = z.replace("*", "")
 
@@ -72,14 +82,20 @@ def rassilka():
         elif row[1] in ("ПМИ", "Геология","Химия"):
             if row[1] == 'ПМИ':
                 z = timetable.get_day("ПМИИ",int(row[2]), dn)
+                k=z.rindex('\n',0, 30)
+                z=z[k+1:]
                 z = z + '\n' + x + '\n' + y + '\n' + c + '\n'
             elif row[1] == 'Геология':
 
                 z = timetable.get_day("ГЕОЛ", row[2], dn)
+                k=z.rindex('\n',0, 30)
+                z=z[k+1:]
                 z = z + '\n' + x + '\n' + y + '\n' + c + '\n'
                 print(z)
             elif row[1] == 'Химия':
                 z = timetable.get_day("ХФММ", row[2], dn)
+                k=z.rindex('\n',0, 30)
+                z=z[k+1:]
                 z = z + '\n' + x + '\n' + y + '\n' + c + '\n'
             z = z.replace("*", "")
             z = privet1+'\n'+z + '\n' + privet
