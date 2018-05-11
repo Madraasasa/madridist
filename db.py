@@ -50,7 +50,7 @@ def rassilka():
     p = b.select('.rSide .description')
     pogoda = p[0].getText()
     c = pogoda.strip()
-    privet1="Доброе утро"
+    privet1="Добрый вечер!!! "+'\n' +'Рассписание на завтра:'
     for row in cur:
         print(row[1])
         print(row[2])
