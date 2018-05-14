@@ -17,13 +17,11 @@ def main():
     while True:
         print('1')
         today = datetime.datetime.now()
-        if dn==7 and today.hour==23 and today.minute>51:
-            config.file += 1
-            a = str(config.file) + '.xlsx'
-            timetable.start(a)
-            config.week+=1
-            a = str(config.week) + '.xlsx'
-            timetable1.start(a)
+        today = datetime.datetime.now()
+        dn = datetime.date.today().isoweekday()
+        if dn==7 and today.hour==23:
+            db.new_week()
+            print(config.file)
         if today.hour==14 and today.minute<30:
             if dn==7:
                 config.file += 1
