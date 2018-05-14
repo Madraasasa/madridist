@@ -118,7 +118,7 @@ def rassilka():
             z = z.replace("*", "")
             z = privet1 + '\n' + z + '\n' + privet
             bot.send_message(row[0], z)
- def new_week():
+def new_week():
     cur.execute('update config set  name1 = ' + str(int(config.week)+1) + ', name =' + str(int(config.file)+1) + '')
     con.commit()
     cur.execute("select * from config")
@@ -127,4 +127,5 @@ def rassilka():
     #print(m)
     config.week=m[0][1]
     config.file=m[0][0]
+
 
