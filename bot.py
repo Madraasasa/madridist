@@ -23,7 +23,7 @@ def main():
             db.new_week()
             print(config.file)
             time.sleep(3600)
-        if today.hour==14 and today.minute<30:
+        if today.hour==15 and today.minute<30:
             if dn==7:
                 config.file += 1
                 a = str(config.file) + '.xlsx'
@@ -33,7 +33,7 @@ def main():
                 timetable1.start(a)
 
             db.rassilka()
-            time.sleep(23*3600)
+            time.sleep(3600)
         else:
             time.sleep(600)
 
