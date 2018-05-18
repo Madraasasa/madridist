@@ -117,7 +117,11 @@ def rassilka():
                 z = z + '\n' + x + '\n' + y + '\n' + c + '\n'
             z = z.replace("*", "")
             z = privet1 + '\n' + z + '\n' + privet
-            bot.send_message(row[0], z)
+            
+            try: 
+              bot.send_message(row[0], z)
+            except Exception:
+              pass
 def new_week():
     cur.execute('update config set  name1 = ' + str(int(config.week)+1) + ', name =' + str(int(config.file)+1) + '')
     con.commit()
