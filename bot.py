@@ -25,9 +25,15 @@ def main():
             time.sleep(3600)
         if today.hour==15 and today.minute<35:
             db.get_week()
+            a = str(config.file) + '.xlsx'
+            timetable.start(a)
+            a = str(config.week) + '.xlsx'
+            timetable1.start(a)
             db.rassilka()
             time.sleep(3600)
         else:
+            db.get_week()
+            print(config.file)
             time.sleep(600)
 
 print(today.hour)
