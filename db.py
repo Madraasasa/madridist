@@ -96,10 +96,10 @@ def rassilka():
             z = privet1 + '\n' + z + '\n' + privet
             z = z.replace("*", "")
             #z = "Прошу прощения за неудобства!!!"
-            try:
-                bot.send_message(row[0], z)
-            except Exception:
-                pass
+                try:
+                    bot.send_message(row[0], z)
+                except Exception:
+                    pass
         elif row[1] in ("ПМИ", "Геология", "Химия"):
             if row[1] == 'ПМИ':
                 z = timetable.get_day("ПМИИ", int(row[2]), dn)
@@ -121,9 +121,9 @@ def rassilka():
             z = z.replace("*", "")
             z = privet1 + '\n' + z + '\n' + privet
             #z="Прошу прощения за неудобства!!!"
-            try: bot.send_message(row[0], z)
-            except Exception:
-                pass
+                try: bot.send_message(row[0], z)
+                except Exception:
+                    pass
 def new_week():
     cur.execute('update config set  name1 = ' + str(int(config.week)+1) + ', name =' + str(int(config.file)+1) + '')
     con.commit()
