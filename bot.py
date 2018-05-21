@@ -24,7 +24,7 @@ def main():
             print(config.file)
             time.sleep(3600)
         if today.hour==15 and today.minute<35:
-
+            db.get_week()
             db.rassilka()
             time.sleep(3600)
         else:
