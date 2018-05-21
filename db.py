@@ -133,5 +133,12 @@ def new_week():
     #print(m)
     config.week=m[0][1]
     config.file=m[0][0]
+def get_week():
+    cur.execute("select * from config")
+    m = cur.fetchall()
+
+    # print(m)
+    config.week = m[0][1]
+    config.file = m[0][0]
 
 
