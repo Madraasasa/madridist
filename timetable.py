@@ -74,6 +74,7 @@ def start(a):
 def get_day(napr,kurs,d):
     #d=datetime.date.today().isoweekday()
     #print(d)
+    a=''
     if napr=="ПМИИ":
         a=pmii[kurs][d-1]
     if napr=="ГЕОЛ":
