@@ -20,6 +20,7 @@ def main():
         today = datetime.datetime.now()
         if dn==7 and today.hour==23:
             db.new_week()
+            time.sleep(3600)
         db.get_week()
         if today.hour==15 and today.minute<10:
             db.get_week()
