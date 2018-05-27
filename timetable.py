@@ -74,7 +74,7 @@ def start(a):
 def get_day(napr,kurs,d):
     #d=datetime.date.today().isoweekday()
     #print(d)
-    a=''
+    a = ''
     if napr=="ПМИИ":
         a=pmii[kurs][d-1]
     if napr=="ГЕОЛ":
@@ -82,6 +82,7 @@ def get_day(napr,kurs,d):
     if napr=="ХИМФ":
         a=chem[kurs][d-1]
     text=''
+
     if a=="ВЫХОДНОЙ":
         return  days[d-1] +"\n"+ a+ '\n'
     else:
