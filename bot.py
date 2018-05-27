@@ -23,7 +23,7 @@ def main():
             db.new_week()
             print(config.file)
             time.sleep(3600)
-        if today.hour==15 and today.minute<35:
+        if today.hour==15 and today.minute<55:
             db.get_week()
             a = str(config.file) + '.xlsx'
             timetable.start(a)
