@@ -47,6 +47,8 @@ def rassilka():
         m = '0' + str(m)
     d = datetime.date.today().day + 1
     print(d)
+    if (len(str(d))) == 1:
+        d = '0' + str(d)
     s = requests.get('https://sinoptik.com.ru/погода-душанбе/2018-' + m + '-' + str(d))
     privet = 'Удачной учебы @MGURASP_Bot'
     b = bs4.BeautifulSoup(s.text, "html.parser")
