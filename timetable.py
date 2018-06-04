@@ -84,7 +84,7 @@ def get_day(napr,kurs,d):
     text=''
 
     if a=="ВЫХОДНОЙ":
-        return  days[d-1] +"\n"+ a+ '\n'
+        return  napr + '  -  '+days[d-1] +"\n"+ a+ '\n'
     else:
         for i in range(0,len(a)):
             text= text +a[i]+ '\n'
