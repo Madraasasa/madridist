@@ -5,6 +5,7 @@ import datetime
 import timetable
 import timetable1
 import requests, bs4
+import weather
 
 bot = telebot.TeleBot(config.token)
 con = p.connect(database='dfq6banncblc4l', user='vtudqaibjctcaw', host='ec2-23-23-142-5.compute-1.amazonaws.com',
@@ -43,28 +44,7 @@ def rassilka():
         dn=dn+1
 
     m = datetime.date.today().month
-    if (len(str(m))) == 1:
-        m = '0' + str(m)
-    d = datetime.date.today().day + 1
-    print(d)
-    if (len(str(d))) == 1:
-        d = '0' + str(d)
-    s = requests.get('https://sinoptik.com.ru/погода-душанбе/2018-' + m + '-' + str(d))
-    privet = 'Удачной учебы @MGURASP_Bot'
-    b = bs4.BeautifulSoup(s.text, "html.parser")
-    p3 = b.select('.temperature .p3')
-    pogoda1 = p3[0].getText()
-    p4 = b.select('.temperature .p4')
-    pogoda2 = p4[0].getText()
-    p5 = b.select('.temperature .p5')
-    pogoda3 = p5[0].getText()
-    p6 = b.select('.temperature .p6')
-    pogoda4 = p6[0].getText()
-    x = 'Утром :' + pogoda1 + ' ' + pogoda2
-    y = 'Днём :' + pogoda3 + ' ' + pogoda4
-    p = b.select('.rSide .description')
-    pogoda = p[0].getText()
-    c = pogoda.strip()
+    privet=weather.start(dn,m)
     privet1 = "Добрый вечер!!! " + '\n' + 'Расписание на завтра:'
     for row in cur:
         print(row[1])
@@ -76,28 +56,28 @@ def rassilka():
                 z = z[k + 1:]
                 if 'ВЫХОДНОЙ' in z:
                   z='У вас нет пар 😊, ВЫХОДНОЙ 🎉'
-                z = z + '\n' + x + '\n' + y + '\n' + c + '\n' + privet
+
             elif row[1] == 'ГМУ':
                 z = timetable1.get_day("ГМУ", row[2], dn)
                 k = z.rindex('\n', 0, 21)
                 z = z[k + 1:]
                 if 'ВЫХОДНОЙ' in z:
                   z='У вас нет пар 😊, ВЫХОДНОЙ 🎉'
-                z = z + '\n' + x + '\n' + y + '\n' + c + '\n'
+
             elif row[1] == "Лингвистика":
                 z = timetable1.get_day("ЛИНГВ", row[2], dn)
                 k = z.rindex('\n', 0, 21)
                 z = z[k + 1:]
                 if 'ВЫХОДНОЙ' in z:
                   z='У вас нет пар 😊, ВЫХОДНОЙ 🎉'
-                z = z + '\n' + x + '\n' + y + '\n' + c + '\n'
+
             elif row[1] == "Реклама":
                 z = timetable1.get_day("РЕКС", row[2], dn)
                 k = z.rindex('\n', 0, 21)
                 z = z[k + 1:]
                 if 'ВЫХОДНОЙ' in z:
                   z='У вас нет пар 😊, ВЫХОДНОЙ 🎉'
-                z = z + '\n' + x + '\n' + y + '\n' + c + '\n'
+
             z = privet1 + '\n' + z + '\n' + privet
             z = z.replace("*", "")
             #z = "Прошу прощения за неудобства!!!"
@@ -112,7 +92,6 @@ def rassilka():
                 z = z[k + 1:]
                 if 'ВЫХОДНОЙ' in z:
                   z='У вас нет пар 😊, ВЫХОДНОЙ 🎉'
-                z = z + '\n' + x + '\n' + y + '\n' + c + '\n'
             elif row[1] == 'Геология':
 
                 z = timetable.get_day("ГЕОЛ", row[2], dn)
@@ -120,7 +99,6 @@ def rassilka():
                 z = z[k + 1:]
                 if 'ВЫХОДНОЙ' in z:
                   z='У вас нет пар 😊, ВЫХОДНОЙ 🎉'
-                z = z + '\n' + x + '\n' + y + '\n' + c + '\n'
                 print(z)
             elif row[1] == 'Химия':
                 z = timetable.get_day("ХИМФ", row[2], dn)
@@ -128,7 +106,6 @@ def rassilka():
                 z = z[k + 1:]
                 if 'ВЫХОДНОЙ' in z:
                   z='У вас нет пар 😊, ВЫХОДНОЙ 🎉'
-                z = z + '\n' + x + '\n' + y + '\n' + c + '\n'
             z = z.replace("*", "")
             z = privet1 + '\n' + z + '\n' + privet
             #z="Прошу прощения за неудобства!!!"
