@@ -42,9 +42,9 @@ def rassilka():
 
     else:
         dn=dn+1
-
+    d= datetime.date.today().day
     m = datetime.date.today().month
-    privet=weather.start(dn,m)
+    privet=weather.start(d,m)
     privet1 = "Добрый вечер!!! " + '\n' + 'Расписание на завтра:'
     for row in cur:
         print(row[1])
