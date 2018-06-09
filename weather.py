@@ -20,18 +20,18 @@ def start(dn, month):
             temp[i]=temp[i]+'☀️'
         elif 'малооблачно' in temp[i]:
             temp[i] = temp[i] + '🌤'
-        elif 'облачность' in temp[i]:
+        elif 'облачно' in temp[i]:
             temp[i] = temp[i] + '🌥🌥'
         elif 'дождь' in temp[i]:
-            temp[i] = temp[i]+' возможен' + '🌧'
+            temp[i] = temp[i]+ '🌧'
         elif 'гроза' in temp[i]:
             temp[i] = temp[i] + '⚡️'
         elif 'снегопад' in temp[i]:
             temp[i] = temp[i] + '🌨'
 
 
-    day='днём  : '+ temp[2]
-    morning='утром : '+ temp[1]
-    nigth='ночью : '+ temp[0]
+    day='*днём*  : _'+ temp[2]+'_'
+    morning='*утром* : _'+ temp[1]+'_'
+    nigth='*ночью* : _'+ temp[0]+'_'
     print(' '+morning+'\n '+day+'\n',nigth)
     return (' '+morning+'\n '+day+'\n'+ nigth)

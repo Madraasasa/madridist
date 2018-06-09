@@ -33,7 +33,12 @@ def main():
             timetable1.start(a)
             db.rassilka()
             time.sleep(3600)
-        elif today.hour==10 and today.minute<10:
+        elif today.hour==11 and today.minute<15:
+            db.get_week()
+            a = str(config.file) + '.xlsx'
+            timetable.start(a)
+            a = str(config.week) + '.xlsx'
+            timetable1.start(a)
             db.send_me()
             time.sleep(600)
         else:
@@ -46,6 +51,5 @@ print(today.hour)
 print(today.minute)
 print(today.second)
 if __name__ == '__main__':
-
     main()
 
