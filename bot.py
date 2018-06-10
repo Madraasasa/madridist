@@ -35,6 +35,9 @@ def main():
             time.sleep(3600)
         elif today.hour==11 and today.minute<15:
             db.get_week()
+            if dn==7:
+                config.file = int(config.file) + 1
+                config.week = int(config.week) + 1
             a = str(config.file) + '.xlsx'
             timetable.start(a)
             a = str(config.week) + '.xlsx'
