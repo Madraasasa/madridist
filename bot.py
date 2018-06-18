@@ -22,7 +22,7 @@ def main():
             db.new_week()
             time.sleep(3600)
         db.get_week()
-        if today.hour==15 and today.minute<15:
+        if today.hour==15 and today.minute<10:
             db.get_week()
             if dn==7:
                 config.file = int(config.file) + 1
