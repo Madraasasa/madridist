@@ -33,7 +33,7 @@ def main():
             timetable1.start(a)
             db.rassilka()
             time.sleep(3600)
-        elif today.hour==11 and today.minute<15:
+        elif today.hour==11 and today.minute<10:
             db.get_week()
             if dn==7:
                 config.file = int(config.file) + 1
