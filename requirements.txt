@@ -4,3 +4,4 @@ telegraphapi
 openpyxl
 psycopg2
 bs4
+xlrd
