@@ -92,7 +92,7 @@ def start(a):
 def get_day(napr,kurs,d):
     #d=datetime.date.today().isoweekday()
     #print(d)
-    a = ''
+    a=''
     if napr=="МО":
         a=moo[kurs][d-1]
     if napr=="ГМУ":
@@ -114,7 +114,7 @@ def get_day(napr,kurs,d):
         text = text.replace('[//ЗАЧЕТ]', ' -ЗАЧЁТ- ')
         text = text.replace('Фак:', '')
         text = text.replace('[//КОНСУЛЬТАЦИЯ]', ' -КОНСУЛЬТАЦИЯ- ')
-        text = text.replace('-ПЗ-  *Стадион "Спартак"*', 'cтад. "Спартак"')
+        text = text.replace('-ПЗ-  *Стадион "Спартак"*', '"Спартак⚽"')
         # p = text.rindex('(')
         # p1 = text.rindex(')')
         # m = text[p + 1:p1 - 1]

@@ -5,7 +5,6 @@ import datetime
 import timetable
 import timetable1
 import requests, bs4
-import weather
 
 bot = telebot.TeleBot(config.token)
 con = p.connect(database='dfq6banncblc4l', user='vtudqaibjctcaw', host='ec2-23-23-142-5.compute-1.amazonaws.com',
@@ -13,7 +12,7 @@ con = p.connect(database='dfq6banncblc4l', user='vtudqaibjctcaw', host='ec2-23-2
 cur = con.cursor()
 a = []
 
-months_name=('Января Февраля Марта Апреля Мая Июня Июля Августа Сентября Октября Ноября Декабря').split(' ')
+
 def start(message, fuc, kurs):
     cur.execute("select * from users")
     a.clear()
@@ -35,8 +34,6 @@ def start(message, fuc, kurs):
 
 
 def rassilka():
-
-    global months_name
     cur.execute("select * from users")
     dn = datetime.date.today().isoweekday()
     if dn == 7:
@@ -44,48 +41,68 @@ def rassilka():
 
     else:
         dn=dn+1
-    d=datetime.date.today().day
+
     m = datetime.date.today().month
-    privet=weather.start(d+1,m)
-    privet1 = "Добрый вечер! 👋" + '\n' + '_Завтра : '+str(d+1)+' '+ months_name[m-1]+', '+timetable1.days[dn-1]+ ' _'
+    if (len(str(m))) == 1:
+        m = '0' + str(m)
+    d = datetime.date.today().day + 1
+    print(d)
+    if (len(str(d))) == 1:
+        d = '0' + str(d)
+    s = requests.get('https://sinoptik.com.ru/погода-душанбе/2018-' + m + '-' + str(d))
+    privet = 'Удачной учебы @MGURASP_Bot'
+    b = bs4.BeautifulSoup(s.text, "html.parser")
+    p3 = b.select('.temperature .p3')
+    pogoda1 = p3[0].getText()
+    p4 = b.select('.temperature .p4')
+    pogoda2 = p4[0].getText()
+    p5 = b.select('.temperature .p5')
+    pogoda3 = p5[0].getText()
+    p6 = b.select('.temperature .p6')
+    pogoda4 = p6[0].getText()
+    x = 'Утром :' + pogoda1 + ' ' + pogoda2
+    y = 'Днём :' + pogoda3 + ' ' + pogoda4
+    p = b.select('.rSide .description')
+    pogoda = p[0].getText()
+    c = pogoda.strip()
+    privet1 = "Добрый вечер!!! " + '\n' + 'Расписание на завтра:'
     for row in cur:
         print(row[1])
         print(row[2])
-        if row[1] in ("МО", "ГМУ", "Лингвистика", "Реклама"):
+        if row[1] in ("МО", "ГМУ", "Лингвистика"):
             if row[1] == 'МО':
                 z = timetable1.get_day("МО", int(row[2]), dn)
                 k = z.rindex('\n', 0, 21)
                 z = z[k + 1:]
                 if 'ВЫХОДНОЙ' in z:
-                    z = 'У вас нет пар 😊, *ВЫХОДНОЙ* 🎉'
-
+                  z='У вас нет пар 😊, ВЫХОДНОЙ 🎉'
+                z = z + '\n' + x + '\n' + y + '\n' + c + '\n' + privet
             elif row[1] == 'ГМУ':
                 z = timetable1.get_day("ГМУ", row[2], dn)
                 k = z.rindex('\n', 0, 21)
                 z = z[k + 1:]
                 if 'ВЫХОДНОЙ' in z:
-                    z = 'У вас нет пар 😊, *ВЫХОДНОЙ* 🎉'
-
+                  z='У вас нет пар 😊, ВЫХОДНОЙ 🎉'
+                z = z + '\n' + x + '\n' + y + '\n' + c + '\n'
             elif row[1] == "Лингвистика":
                 z = timetable1.get_day("ЛИНГВ", row[2], dn)
                 k = z.rindex('\n', 0, 21)
                 z = z[k + 1:]
                 if 'ВЫХОДНОЙ' in z:
-                    z = 'У вас нет пар 😊, *ВЫХОДНОЙ* 🎉'
-
+                  z='У вас нет пар 😊, ВЫХОДНОЙ 🎉'
+                z = z + '\n' + x + '\n' + y + '\n' + c + '\n'
             elif row[1] == "Реклама":
                 z = timetable1.get_day("РЕКС", row[2], dn)
                 k = z.rindex('\n', 0, 21)
                 z = z[k + 1:]
                 if 'ВЫХОДНОЙ' in z:
-                    z = 'У вас нет пар 😊, *ВЫХОДНОЙ* 🎉'
-
-            z = privet1 + '\n' + '*Расписание:*\n'+z + '\n' +'*Погода:*\n' +privet+ "\n *Удачной учёбы* 😊"
-            #z = z.replace("*", "")
+                  z='У вас нет пар 😊, ВЫХОДНОЙ 🎉'
+                z = z + '\n' + x + '\n' + y + '\n' + c + '\n'
+            z = privet1 + '\n' + z + '\n' + privet
+            z = z.replace("*", "")
             #z = "Прошу прощения за неудобства!!!"
             try:
-                bot.send_message(row[0], z, parse_mode="markdown")
-                print(z)
+                bot.send_message(row[0], z)
             except Exception:
                 pass
         elif row[1] in ("ПМИ", "Геология", "Химия"):
@@ -94,27 +111,28 @@ def rassilka():
                 k = z.rindex('\n', 0, 21)
                 z = z[k + 1:]
                 if 'ВЫХОДНОЙ' in z:
-                    z = 'У вас нет пар 😊, *ВЫХОДНОЙ* 🎉'
+                  z='У вас нет пар 😊, ВЫХОДНОЙ 🎉'
+                z = z + '\n' + x + '\n' + y + '\n' + c + '\n'
             elif row[1] == 'Геология':
 
                 z = timetable.get_day("ГЕОЛ", row[2], dn)
                 k = z.rindex('\n', 0, 21)
                 z = z[k + 1:]
                 if 'ВЫХОДНОЙ' in z:
-                    z = 'У вас нет пар 😊, *ВЫХОДНОЙ* 🎉'
+                  z='У вас нет пар 😊, ВЫХОДНОЙ 🎉'
+                z = z + '\n' + x + '\n' + y + '\n' + c + '\n'
                 print(z)
             elif row[1] == 'Химия':
                 z = timetable.get_day("ХИМФ", row[2], dn)
                 k = z.rindex('\n', 0, 21)
                 z = z[k + 1:]
                 if 'ВЫХОДНОЙ' in z:
-                    z = 'У вас нет пар 😊, *ВЫХОДНОЙ* 🎉'
-            #z = z.replace("*", "")
-            z = privet1 + '\n' + '*Расписание:*\n' + z + '\n' + '*Погода:*\n' + privet + "\n *Удачной учёбы* 😊"
+                  z='У вас нет пар 😊, ВЫХОДНОЙ 🎉'
+                z = z + '\n' + x + '\n' + y + '\n' + c + '\n'
+            z = z.replace("*", "")
+            z = privet1 + '\n' + z + '\n' + privet
             #z="Прошу прощения за неудобства!!!"
-            try:
-                bot.send_message(row[0], z, parse_mode="markdown")
-                print(z)
+            try: bot.send_message(row[0], z)
             except Exception:
                 pass
 def new_week():
@@ -134,25 +152,14 @@ def get_week():
     config.week = m[0][1]
     config.file = m[0][0]
 def send_me():
-    global months_name
     dn = datetime.date.today().isoweekday()
     if dn == 7:
         dn = 1
-
+        config.file= int(config.file)+ 1
+        a = str(config.file) + '.xlsx'
+        timetable.start(a)
     else:
         dn = dn + 1
-    d = datetime.date.today().day
-    m = datetime.date.today().month
-
-    privet = weather.start(d + 1, m)
-    privet1 = "Добрый вечер! 👋" + '\n' + '_Завтра : ' + str(d + 1) + ' ' + months_name[m - 1] + ', ' + timetable1.days[
-        dn - 1] + ' _'
-
-    z = timetable.get_day("ПМИИ", 3, dn)
-    k = z.rindex('\n', 0, 21)
-    z = z[k + 1:]
-    if 'ВЫХОДНОЙ' in z:
-        z = 'У вас нет пар 😊, *ВЫХОДНОЙ* 🎉'
-    z = privet1 + '\n\n' + '*Расписание:*\n' + z + '\n\n' + '*Погода:*\n' + privet + "\n\n *Удачной учёбы* 😊"
-    print(z)
-    bot.send_message(120929625, z, parse_mode="markdown")
+    privet1 = "Добрый вечер!!! " + '\n' + 'Рассписание на завтра:'
+    a=timetable.get_day("ПМИИ", 3, dn)
+    print(a)
