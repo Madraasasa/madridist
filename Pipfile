@@ -9,6 +9,7 @@ telegraphapi="*"
 openpyxl="*"
 psycopg2="*"
 bs4="*"
+xlrd="*"
 
 [requires]
 python_version = "3.6"
