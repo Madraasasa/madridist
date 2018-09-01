@@ -10,6 +10,6 @@ openpyxl="*"
 psycopg2="*"
 bs4="*"
 xlrd="*"
-
+rarfile="*"
 [requires]
 python_version = "3.6"
